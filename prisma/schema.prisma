@@ -1,0 +1,308 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+  TECHNICIAN
+  STAFF
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum ServiceStatus {
+  PENDING
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ServiceType {
+  INSTALLATION
+  REPAIR
+  MAINTENANCE
+  AMC
+}
+
+enum AMCStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String   @unique
+  email        String?  @unique
+  passwordHash String?
+  role         UserRole @default(CUSTOMER)
+  address      String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  orders          Order[]
+  serviceRequests ServiceRequest[]
+  amcContracts    AMCContract[]
+  addresses       Address[]
+  reviews         Review[]
+  notifications   Notification[]
+  payments        Payment[]
+  technician      Technician?
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  category      String
+  brand         String?
+  description   String?
+  price         Float
+  discountPrice Float?
+  stockQty      Int      @default(0)
+  sku           String   @unique
+  imageUrl      String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  categoryId    String?
+
+  productCategory ProductCategory? @relation(fields: [categoryId], references: [id])
+  orderItems      OrderItem[]
+  reviews         Review[]
+  inventoryLogs   InventoryLog[]
+}
+
+model ProductCategory {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  slug        String  @unique
+  description String?
+  icon        String?
+
+  products Product[]
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  userId        String
+  totalAmount   Float
+  paymentStatus PaymentStatus @default(PENDING)
+  orderStatus   OrderStatus   @default(PENDING)
+  paymentMethod String?
+  addressId     String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  user     User        @relation(fields: [userId], references: [id])
+  address  Address?    @relation(fields: [addressId], references: [id])
+  items    OrderItem[]
+  invoice  Invoice?
+  payments Payment[]
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  productId String
+  qty       Int
+  unitPrice Float
+  subtotal  Float
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model ServiceRequest {
+  id            String        @id @default(cuid())
+  userId        String
+  technicianId  String?
+  serviceType   ServiceType
+  roBrand       String?
+  description   String?
+  preferredDate DateTime?
+  status        ServiceStatus @default(PENDING)
+  addressId     String?
+  charges       Float?        @default(0)
+  createdAt     DateTime      @default(now())
+  resolvedAt    DateTime?
+
+  user       User        @relation(fields: [userId], references: [id])
+  technician Technician? @relation(fields: [technicianId], references: [id])
+  address    Address?    @relation(fields: [addressId], references: [id])
+  invoice    Invoice?
+  reviews    Review[]
+}
+
+model AMCContract {
+  id             String    @id @default(cuid())
+  userId         String
+  startDate      DateTime
+  endDate        DateTime
+  planType       String
+  visitsIncluded Int
+  visitsUsed     Int       @default(0)
+  amountPaid     Float
+  status         AMCStatus @default(ACTIVE)
+  nextServiceDue DateTime?
+  createdAt      DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Technician {
+  id                 String  @id @default(cuid())
+  userId             String  @unique
+  name               String
+  phone              String
+  skillLevel         String?
+  assignedArea       String?
+  isAvailable        Boolean @default(true)
+  totalJobsCompleted Int     @default(0)
+
+  user            User             @relation(fields: [userId], references: [id])
+  serviceRequests ServiceRequest[]
+}
+
+model Invoice {
+  id            String    @id @default(cuid())
+  orderId       String?   @unique
+  serviceId     String?   @unique
+  invoiceNumber String    @unique
+  issueDate     DateTime  @default(now())
+  dueDate       DateTime?
+  total         Float
+  taxAmount     Float     @default(0)
+  discount      Float     @default(0)
+  pdfUrl        String?
+  status        String    @default("UNPAID")
+
+  order    Order?          @relation(fields: [orderId], references: [id])
+  service  ServiceRequest? @relation(fields: [serviceId], references: [id])
+  payments Payment[]
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  userId        String
+  invoiceId     String?
+  orderId       String?
+  amount        Float
+  method        String
+  transactionId String?
+  status        PaymentStatus @default(PENDING)
+  paidAt        DateTime      @default(now())
+
+  user    User     @relation(fields: [userId], references: [id])
+  invoice Invoice? @relation(fields: [invoiceId], references: [id])
+  order   Order?   @relation(fields: [orderId], references: [id])
+}
+
+model Address {
+  id        String  @id @default(cuid())
+  userId    String
+  label     String?
+  street    String
+  city      String
+  state     String
+  pincode   String
+  landmark  String?
+  isDefault Boolean @default(false)
+
+  user            User             @relation(fields: [userId], references: [id])
+  orders          Order[]
+  serviceRequests ServiceRequest[]
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  userId     String
+  productId  String?
+  serviceId  String?
+  rating     Int
+  comment    String?
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  user    User            @relation(fields: [userId], references: [id])
+  product Product?        @relation(fields: [productId], references: [id])
+  service ServiceRequest? @relation(fields: [serviceId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String
+  type      String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model InventoryLog {
+  id         String   @id @default(cuid())
+  productId  String
+  changeType String
+  qty        Int
+  reason     String?
+  changedBy  String
+  createdAt  DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Coupon {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  discountType String
+  value        Float
+  minOrder     Float    @default(0)
+  usageLimit   Int?
+  usedCount    Int      @default(0)
+  validFrom    DateTime
+  validTo      DateTime
+  isActive     Boolean  @default(true)
+}
+
+model SiteSetting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+model ServiceArea {
+  id            String  @id @default(cuid())
+  city          String
+  pincode       String  @unique
+  isServiceable Boolean @default(true)
+}
+
+model ContactInquiry {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  message   String
+  isReplied Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
