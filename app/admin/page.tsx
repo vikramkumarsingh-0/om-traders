@@ -1,11 +1,21 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 export default function AdminPage() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    router.push('/admin/dashboard');
+  }, [router]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50 flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-primary-900 mb-4">Redirecting to Dashboard...</h1>
-        <p className="text-primary-600">Please wait</p>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
+        <p className="text-primary-600">Redirecting to Dashboard...</p>
       </div>
-      <script dangerouslySetInnerHTML={{ __html: `window.location.href='/admin/dashboard'` }} />
     </div>
   );
 }
