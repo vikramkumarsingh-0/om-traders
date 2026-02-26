@@ -17,131 +17,145 @@ const categoryData = [
   { name: "Filters", value: 400, color: "#003566" },
   { name: "Membranes", value: 300, color: "#0096C7" },
   { name: "Pumps", value: 200, color: "#FF6B00" },
-  { name: "Others", value: 100, color: "#48CAE4" },
+  { name: "Others", value: 100, color: "#10b981" },
 ];
 
 export default function AdminDashboard() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white/80 backdrop-blur-sm shadow-soft border-b border-primary-100">
         <div className="px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-primary">Admin Dashboard</h1>
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary-900 to-secondary-600 bg-clip-text text-transparent">Dashboard</h1>
+            <p className="text-primary-600 mt-1">Welcome back, Admin</p>
+          </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">Admin User</span>
-            <button className="bg-red-500 text-white px-4 py-2 rounded-lg text-sm">Logout</button>
+            <div className="bg-gradient-to-r from-success-500 to-success-600 text-white px-4 py-2 rounded-full text-sm font-medium">
+              🟢 System Online
+            </div>
           </div>
         </div>
       </header>
 
       <div className="p-6">
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <KPICard
             title="Total Revenue"
             value="₹1,24,500"
             subtitle="This Month"
             icon={DollarSign}
-            color="bg-green-500"
+            gradient="from-success-500 to-success-600"
             trend="+12.5%"
+            trendColor="text-success-600"
           />
           <KPICard
             title="Total Orders"
             value="156"
             subtitle="42 Pending"
             icon={ShoppingCart}
-            color="bg-blue-500"
+            gradient="from-primary-500 to-primary-600"
             trend="+8.2%"
+            trendColor="text-primary-600"
           />
           <KPICard
             title="Service Requests"
             value="89"
             subtitle="23 In-Progress"
             icon={Wrench}
-            color="bg-purple-500"
+            gradient="from-secondary-500 to-secondary-600"
             trend="+15.3%"
+            trendColor="text-secondary-600"
           />
           <KPICard
             title="Active AMC"
             value="67"
             subtitle="12 Expiring Soon"
             icon={Calendar}
-            color="bg-orange-500"
+            gradient="from-accent-500 to-accent-600"
             trend="+5.1%"
+            trendColor="text-accent-600"
           />
         </div>
 
         {/* Secondary KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="bg-white p-6 rounded-lg shadow">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm">New Customers Today</p>
-                <p className="text-3xl font-bold text-primary">12</p>
+                <p className="text-primary-600 text-sm font-medium">New Customers Today</p>
+                <p className="text-3xl font-bold text-primary-900 mt-1">12</p>
               </div>
-              <Users className="w-12 h-12 text-blue-500" />
+              <div className="bg-gradient-to-br from-primary-100 to-primary-200 p-3 rounded-xl">
+                <Users className="w-8 h-8 text-primary-600" />
+              </div>
             </div>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-error-100">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm">Low Stock Alerts</p>
-                <p className="text-3xl font-bold text-red-500">8</p>
+                <p className="text-error-600 text-sm font-medium">Low Stock Alerts</p>
+                <p className="text-3xl font-bold text-error-700 mt-1">8</p>
               </div>
-              <AlertTriangle className="w-12 h-12 text-red-500" />
+              <div className="bg-gradient-to-br from-error-100 to-error-200 p-3 rounded-xl">
+                <AlertTriangle className="w-8 h-8 text-error-600" />
+              </div>
             </div>
           </div>
-          <div className="bg-white p-6 rounded-lg shadow">
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-warning-100">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm">AMC Renewals (7 days)</p>
-                <p className="text-3xl font-bold text-orange-500">15</p>
+                <p className="text-warning-600 text-sm font-medium">AMC Renewals (7 days)</p>
+                <p className="text-3xl font-bold text-warning-700 mt-1">15</p>
               </div>
-              <Calendar className="w-12 h-12 text-orange-500" />
+              <div className="bg-gradient-to-br from-warning-100 to-warning-200 p-3 rounded-xl">
+                <Calendar className="w-8 h-8 text-warning-600" />
+              </div>
             </div>
           </div>
         </div>
 
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Revenue Trend */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-bold mb-4">Revenue Trend (This Week)</h3>
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100">
+            <h3 className="text-xl font-bold text-primary-900 mb-6">Revenue Trend (This Week)</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <XAxis dataKey="name" stroke="#64748b" />
+                <YAxis stroke="#64748b" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
                 <Legend />
-                <Line type="monotone" dataKey="orders" stroke="#003566" strokeWidth={2} />
-                <Line type="monotone" dataKey="services" stroke="#0096C7" strokeWidth={2} />
+                <Line type="monotone" dataKey="orders" stroke="#003566" strokeWidth={3} dot={{ fill: '#003566', strokeWidth: 2, r: 6 }} />
+                <Line type="monotone" dataKey="services" stroke="#0096C7" strokeWidth={3} dot={{ fill: '#0096C7', strokeWidth: 2, r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
 
           {/* Order vs Service Revenue */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-bold mb-4">Order vs Service Revenue</h3>
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100">
+            <h3 className="text-xl font-bold text-primary-900 mb-6">Order vs Service Revenue</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={revenueData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                <XAxis dataKey="name" stroke="#64748b" />
+                <YAxis stroke="#64748b" />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
                 <Legend />
-                <Bar dataKey="orders" fill="#003566" />
-                <Bar dataKey="services" fill="#FF6B00" />
+                <Bar dataKey="orders" fill="#003566" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="services" fill="#FF6B00" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* Sales by Category & Top Products */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {/* Pie Chart */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-bold mb-4">Sales by Category</h3>
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100">
+            <h3 className="text-xl font-bold text-primary-900 mb-6">Sales by Category</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -158,15 +172,15 @@ export default function AdminDashboard() {
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
 
           {/* Top Products */}
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-lg font-bold mb-4">Top 5 Selling Products</h3>
-            <div className="space-y-3">
+          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100">
+            <h3 className="text-xl font-bold text-primary-900 mb-6">Top 5 Selling Products</h3>
+            <div className="space-y-4">
               {[
                 { name: "RO Membrane 75 GPD", sales: 145, revenue: "₹43,500" },
                 { name: "Sediment Filter", sales: 132, revenue: "₹26,400" },
@@ -174,12 +188,12 @@ export default function AdminDashboard() {
                 { name: "RO Pump", sales: 67, revenue: "₹33,500" },
                 { name: "UV Lamp", sales: 54, revenue: "₹27,000" },
               ].map((product, i) => (
-                <div key={i} className="flex justify-between items-center p-3 bg-gray-50 rounded">
+                <div key={i} className="flex justify-between items-center p-4 bg-gradient-to-r from-primary-50 to-secondary-50 rounded-xl border border-primary-100">
                   <div>
-                    <p className="font-semibold text-sm">{product.name}</p>
-                    <p className="text-xs text-gray-600">{product.sales} units sold</p>
+                    <p className="font-semibold text-primary-900">{product.name}</p>
+                    <p className="text-sm text-primary-600">{product.sales} units sold</p>
                   </div>
-                  <p className="font-bold text-primary">{product.revenue}</p>
+                  <p className="font-bold text-success-600 text-lg">{product.revenue}</p>
                 </div>
               ))}
             </div>
@@ -187,21 +201,21 @@ export default function AdminDashboard() {
         </div>
 
         {/* Activity Feed */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-bold mb-4">Recent Activity</h3>
-          <div className="space-y-3">
+        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100">
+          <h3 className="text-xl font-bold text-primary-900 mb-6">Recent Activity</h3>
+          <div className="space-y-4">
             {[
-              { type: "order", msg: "New order #OMT-1234 received", time: "2 mins ago", color: "green" },
-              { type: "service", msg: "Service request assigned to Technician A", time: "15 mins ago", color: "blue" },
-              { type: "payment", msg: "Payment of ₹2,500 received", time: "1 hour ago", color: "green" },
-              { type: "cancel", msg: "Order #OMT-1230 cancelled", time: "2 hours ago", color: "red" },
-              { type: "amc", msg: "AMC contract renewed by Customer X", time: "3 hours ago", color: "orange" },
+              { type: "order", msg: "New order #OMT-1234 received", time: "2 mins ago", color: "success" },
+              { type: "service", msg: "Service request assigned to Technician A", time: "15 mins ago", color: "primary" },
+              { type: "payment", msg: "Payment of ₹2,500 received", time: "1 hour ago", color: "success" },
+              { type: "cancel", msg: "Order #OMT-1230 cancelled", time: "2 hours ago", color: "error" },
+              { type: "amc", msg: "AMC contract renewed by Customer X", time: "3 hours ago", color: "accent" },
             ].map((activity, i) => (
-              <div key={i} className="flex items-center gap-3 p-3 border-l-4 border-gray-200 hover:bg-gray-50">
-                <div className={`w-2 h-2 rounded-full bg-${activity.color}-500`}></div>
+              <div key={i} className="flex items-center gap-4 p-4 rounded-xl hover:bg-primary-50 transition-colors border-l-4 border-primary-200">
+                <div className={`w-3 h-3 rounded-full bg-${activity.color}-500`}></div>
                 <div className="flex-1">
-                  <p className="text-sm">{activity.msg}</p>
-                  <p className="text-xs text-gray-500">{activity.time}</p>
+                  <p className="text-primary-900 font-medium">{activity.msg}</p>
+                  <p className="text-sm text-primary-600">{activity.time}</p>
                 </div>
               </div>
             ))}
@@ -212,18 +226,18 @@ export default function AdminDashboard() {
   );
 }
 
-function KPICard({ title, value, subtitle, icon: Icon, color, trend }: any) {
+function KPICard({ title, value, subtitle, icon: Icon, gradient, trend, trendColor }: any) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-card border border-primary-100 hover:shadow-soft transition-all duration-300 hover:scale-105">
       <div className="flex items-center justify-between mb-4">
-        <div className={`${color} p-3 rounded-lg`}>
+        <div className={`bg-gradient-to-br ${gradient} p-3 rounded-xl shadow-lg`}>
           <Icon className="w-6 h-6 text-white" />
         </div>
-        <span className="text-green-600 text-sm font-semibold">{trend}</span>
+        <span className={`${trendColor} text-sm font-bold bg-primary-50 px-3 py-1 rounded-full`}>{trend}</span>
       </div>
-      <h3 className="text-gray-600 text-sm mb-1">{title}</h3>
-      <p className="text-3xl font-bold text-gray-900">{value}</p>
-      <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+      <h3 className="text-primary-600 text-sm font-medium mb-1">{title}</h3>
+      <p className="text-3xl font-bold text-primary-900 mb-1">{value}</p>
+      <p className="text-sm text-primary-500">{subtitle}</p>
     </div>
   );
 }
