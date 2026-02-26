@@ -31,7 +31,18 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
-.env*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.production
+
+# sensitive keys and secrets
+*.pem
+*.key
+*.p12
+*.pfx
 
 # vercel
 .vercel
@@ -41,3 +52,12 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
+
+.vercel
+
+
+# keys
+# om-traders-jwt-secret-key-2025
+# om-traders-super-secret-key-change-in-production-2025
+.vercel
+.env*.local
