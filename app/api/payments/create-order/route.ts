@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import Razorpay from 'razorpay';
 
 export async function POST(request: Request) {
   try {
@@ -13,6 +12,7 @@ export async function POST(request: Request) {
       );
     }
 
+    const Razorpay = (await import('razorpay')).default;
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
       key_secret: process.env.RAZORPAY_KEY_SECRET,
