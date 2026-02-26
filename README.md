@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OM Traders - RO Water Purifier Service Platform
 
-## Getting Started
+Full-stack business website for RO water purifier service, repair, and spare parts.
 
-First, run the development server:
+## Features
 
+✅ **Customer Portal**
+- SEO-optimized homepage
+- Product shop with filters
+- Service booking system
+- AMC plans
+- Order tracking
+
+✅ **Admin Dashboard**
+- Real-time KPI cards
+- Revenue charts (Line, Bar, Pie)
+- Order management
+- Service request tracking
+- Inventory management
+
+✅ **Database**
+- 18-table PostgreSQL schema
+- Prisma ORM
+- Migrations & seeding
+
+✅ **SEO & PWA**
+- Structured data (JSON-LD)
+- Sitemap.xml
+- Robots.txt
+- PWA manifest
+- Meta tags
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: PostgreSQL + Prisma
+- **Charts**: Recharts
+- **Auth**: JWT + bcrypt
+- **UI**: Lucide Icons, React Hot Toast
+
+## Setup
+
+1. **Install dependencies**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Setup database**
+```bash
+npx create-db  # Creates free Prisma Postgres DB
+npm run db:generate
+npm run db:migrate
+npm run db:seed
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Run development server**
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. **Open browser**
+```
+http://localhost:3000
+```
 
-## Learn More
+## Pages
 
-To learn more about Next.js, take a look at the following resources:
+- `/` - Homepage
+- `/shop` - Products
+- `/services` - Services list
+- `/book-service` - Booking form
+- `/admin/dashboard` - Admin panel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `.env` file for configuration.
 
-## Deploy on Vercel
+## Database Commands
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run db:generate  # Generate Prisma Client
+npm run db:migrate   # Run migrations
+npm run db:seed      # Seed database
+npm run db:studio    # Open Prisma Studio
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+Deploy to Vercel:
+```bash
+vercel
+```
+
+## License
+
+MIT
