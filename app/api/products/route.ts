@@ -6,18 +6,46 @@ const products = [
 ];
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const category = searchParams.get('category');
-  
-  let filtered = products;
-  if (category && category !== 'All') {
-    filtered = products.filter(p => p.category === category);
+  try {
+    console.log('[API:PRODUCTS:GET] Fetching products');
+    
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category');
+    console.log('[API:PRODUCTS:GET] Filter category:', category);
+    
+    let filtered = products;
+    if (category && category !== 'All') {
+      filtered = products.filter(p => p.category === category);
+      console.log('[API:PRODUCTS:GET] Filtered products:', filtered.length);
+    }
+    
+    return NextResponse.json({ success: true, products: filtered });
+  } catch (error: any) {
+    console.error('[API:PRODUCTS:GET] Error:', error.message, error.stack);
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Failed to fetch products',
+      details: error.message,
+      code: 'FETCH_ERROR'
+    }, { status: 500 });
   }
-  
-  return NextResponse.json({ success: true, products: filtered });
 }
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  return NextResponse.json({ success: true, message: 'Product added' });
+  try {
+    console.log('[API:PRODUCTS:POST] Adding product');
+    
+    const body = await request.json();
+    console.log('[API:PRODUCTS:POST] Product data:', body);
+    
+    return NextResponse.json({ success: true, message: 'Product added' });
+  } catch (error: any) {
+    console.error('[API:PRODUCTS:POST] Error:', error.message, error.stack);
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Failed to add product',
+      details: error.message,
+      code: 'ADD_ERROR'
+    }, { status: 500 });
+  }
 }

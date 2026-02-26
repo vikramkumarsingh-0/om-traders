@@ -12,21 +12,29 @@ const transporter = nodemailer.createTransport({
 
 export async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
   try {
+    console.log('[LIB:EMAIL:sendEmail] Sending email to:', to);
+    console.log('[LIB:EMAIL:sendEmail] Subject:', subject);
+    
     await transporter.sendMail({
       from: process.env.SMTP_FROM || 'noreply@omtraders.com',
       to,
       subject,
       html,
     });
+    
+    console.log('[LIB:EMAIL:sendEmail] Email sent successfully');
     return true;
-  } catch (error) {
-    console.error('Email send failed:', error);
+  } catch (error: any) {
+    console.error('[LIB:EMAIL:sendEmail] Error:', error.message, error.stack);
     return false;
   }
 }
 
 export async function sendWelcomeEmail(email: string, name: string): Promise<boolean> {
-  const html = `
+  try {
+    console.log('[LIB:EMAIL:sendWelcomeEmail] Sending welcome email to:', email);
+    
+    const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #003566;">Welcome to OM Traders!</h2>
       <p>Hi ${name},</p>
@@ -42,12 +50,21 @@ export async function sendWelcomeEmail(email: string, name: string): Promise<boo
       <p style="color: #666; font-size: 12px;">Pure Water. Pure Trust.</p>
     </div>
   `;
-  
-  return sendEmail(email, 'Welcome to OM Traders', html);
+    
+    const result = await sendEmail(email, 'Welcome to OM Traders', html);
+    console.log('[LIB:EMAIL:sendWelcomeEmail] Welcome email sent:', result);
+    return result;
+  } catch (error: any) {
+    console.error('[LIB:EMAIL:sendWelcomeEmail] Error:', error.message);
+    return false;
+  }
 }
 
 export async function sendOrderInvoiceEmail(email: string, orderId: string, invoiceUrl: string): Promise<boolean> {
-  const html = `
+  try {
+    console.log('[LIB:EMAIL:sendOrderInvoiceEmail] Sending invoice email to:', email);
+    
+    const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <h2 style="color: #003566;">Order Invoice - ${orderId}</h2>
       <p>Your order has been confirmed!</p>
@@ -56,6 +73,12 @@ export async function sendOrderInvoiceEmail(email: string, orderId: string, invo
       <p>Thank you for choosing OM Traders!</p>
     </div>
   `;
-  
-  return sendEmail(email, `Invoice for Order ${orderId}`, html);
+    
+    const result = await sendEmail(email, `Invoice for Order ${orderId}`, html);
+    console.log('[LIB:EMAIL:sendOrderInvoiceEmail] Invoice email sent:', result);
+    return result;
+  } catch (error: any) {
+    console.error('[LIB:EMAIL:sendOrderInvoiceEmail] Error:', error.message);
+    return false;
+  }
 }
