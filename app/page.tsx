@@ -46,10 +46,10 @@ export default function Home() {
       </section>
 
       {/* Trust Badges */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-8 bg-primary-100">
         <div className="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div className="flex flex-col items-center">
-            <CheckCircle className="w-12 h-12 text-green-600 mb-2" />
+            <CheckCircle className="w-12 h-12 text-success-600 mb-2" />
             <p className="font-semibold">500+ Customers Served</p>
           </div>
           <div className="flex flex-col items-center">
@@ -68,7 +68,7 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section className="py-16">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-primary">Our Services</h2>
           <div className="grid md:grid-cols-4 gap-6">
@@ -78,7 +78,7 @@ export default function Home() {
               { title: "AMC Plans", icon: Shield, desc: "Annual maintenance contracts" },
               { title: "Spare Parts", icon: ShoppingCart, desc: "Genuine RO parts" },
             ].map((service, i) => (
-              <div key={i} className="bg-white border-2 border-gray-200 rounded-lg p-6 hover:border-primary transition text-center">
+              <div key={i} className="bg-white border-2 border-primary-200 rounded-lg p-6 hover:border-primary hover:shadow-lg transition text-center">
                 <service.icon className="w-16 h-16 mx-auto mb-4 text-primary" />
                 <h3 className="text-xl font-bold mb-2">{service.title}</h3>
                 <p className="text-gray-600 mb-4">{service.desc}</p>
@@ -92,7 +92,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-primary-50">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-primary">How It Works</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -176,7 +176,7 @@ export default function Home() {
         href="https://wa.me/919876543210"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50"
+        className="fixed bottom-6 right-6 bg-success-500 hover:bg-success-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50"
       >
         <Phone className="w-6 h-6" />
       </a>

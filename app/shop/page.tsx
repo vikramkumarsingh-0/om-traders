@@ -23,7 +23,7 @@ export default function ShopPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-primary text-white py-4">
         <div className="container mx-auto px-4">
@@ -37,18 +37,18 @@ export default function ShopPage() {
         <div className="grid lg:grid-cols-4 gap-6">
           {/* Sidebar Filters */}
           <div className="lg:col-span-1">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h3 className="font-bold text-lg mb-4">Filters</h3>
+            <div className="bg-primary-50 p-6 rounded-lg shadow border border-primary-200">
+              <h3 className="font-bold text-lg text-primary mb-4">Filters</h3>
               
               {/* Search */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold mb-2">Search</label>
+                <label className="block text-sm font-semibold text-primary mb-2">Search</label>
                 <div className="relative">
                   <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search products..."
-                    className="w-full pl-10 pr-4 py-2 border rounded-lg"
+                    className="w-full pl-10 pr-4 py-2 border border-primary-200 rounded-lg focus:border-primary focus:outline-none"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
@@ -57,7 +57,7 @@ export default function ShopPage() {
 
               {/* Category Filter */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold mb-2">Category</label>
+                <label className="block text-sm font-semibold text-primary mb-2">Category</label>
                 <div className="space-y-2">
                   {["All", "Membranes", "Filters", "Pumps", "UV Parts", "Controllers"].map(cat => (
                     <label key={cat} className="flex items-center">
@@ -68,7 +68,7 @@ export default function ShopPage() {
                         onChange={() => setSelectedCategory(cat)}
                         className="mr-2"
                       />
-                      {cat}
+                      <span className="text-gray-700">{cat}</span>
                     </label>
                   ))}
                 </div>
@@ -76,7 +76,7 @@ export default function ShopPage() {
 
               {/* Price Range */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold mb-2">Price Range</label>
+                <label className="block text-sm font-semibold text-primary mb-2">Price Range</label>
                 <input type="range" min="0" max="2000" className="w-full" />
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>₹0</span>
@@ -90,7 +90,7 @@ export default function ShopPage() {
           <div className="lg:col-span-3">
             <div className="flex justify-between items-center mb-6">
               <p className="text-gray-600">{filteredProducts.length} products found</p>
-              <select className="border rounded-lg px-4 py-2">
+              <select className="border border-primary-200 rounded-lg px-4 py-2 focus:border-primary focus:outline-none">
                 <option>Sort by: Popularity</option>
                 <option>Price: Low to High</option>
                 <option>Price: High to Low</option>
@@ -100,23 +100,23 @@ export default function ShopPage() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map(product => (
-                <div key={product.id} className="bg-white rounded-lg shadow hover:shadow-lg transition">
-                  <div className="h-48 bg-gray-200 rounded-t-lg flex items-center justify-center">
-                    <span className="text-gray-400">Product Image</span>
+                <div key={product.id} className="bg-white rounded-lg shadow hover:shadow-lg transition border border-gray-200">
+                  <div className="h-48 bg-primary-100 rounded-t-lg flex items-center justify-center">
+                    <span className="text-primary-600 font-semibold">Product Image</span>
                   </div>
                   <div className="p-4">
-                    <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
-                    <h3 className="font-semibold mb-2">{product.name}</h3>
+                    <p className="text-xs text-primary-600 mb-1 font-semibold">{product.brand}</p>
+                    <h3 className="font-semibold text-gray-800 mb-2">{product.name}</h3>
                     <div className="flex items-center gap-1 mb-2">
                       <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      <span className="text-sm">{product.rating}</span>
+                      <span className="text-sm text-gray-700">{product.rating}</span>
                     </div>
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-2xl font-bold text-primary">₹{product.discountPrice}</span>
                       <span className="text-sm text-gray-500 line-through">₹{product.price}</span>
                     </div>
-                    <p className="text-xs text-green-600 mb-3">In Stock: {product.stock} units</p>
-                    <button className="w-full bg-accent hover:bg-accent/90 text-white py-2 rounded-lg flex items-center justify-center gap-2">
+                    <p className="text-xs text-success-600 mb-3 font-semibold">In Stock: {product.stock} units</p>
+                    <button className="w-full bg-accent hover:bg-accent/90 text-white py-2 rounded-lg flex items-center justify-center gap-2 font-semibold">
                       <ShoppingCart className="w-4 h-4" />
                       Add to Cart
                     </button>
